@@ -9,12 +9,38 @@ namespace ShadeGameLevelEditor.Model
 
         #region Fields
 
-        private int _x, _y, _width, _height;
+        private double _x, _y, _width, _height;
 
         #endregion
 
         #region Properties
 
+        public double X
+        {
+            get { return _x; }
+            set { _x = value; }
+        }
+
+        public double Y
+        {
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        public double Width
+        {
+            get { return _width; }
+            set { _width = value; }
+        }
+
+        public double Height
+        {
+            get { return _height; }
+            set { _height = value; }
+        }
+        #endregion
+
+        #region Constructors
         public Platform()
         {
             _x = 0;
@@ -23,7 +49,7 @@ namespace ShadeGameLevelEditor.Model
             _height = 0;
         }
 
-        public Platform(int x, int y, int width, int height)
+        public Platform(double x, double y, double width, double height)
         {
             _x = x;
             _y = y;
@@ -38,10 +64,6 @@ namespace ShadeGameLevelEditor.Model
             _width = p._width;
             _height = p._height;
         }
-
-        #endregion
-
-        #region Constructors
         #endregion
 
         #region Methods

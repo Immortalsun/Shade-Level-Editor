@@ -61,7 +61,7 @@ namespace ShadeGameLevelEditor.Models
 
         }
 
-        public void AddPlatformByCoordinates(int left, int top, int width, int height)
+        public void AddPlatformByCoordinates(double left, double top, double width, double height)
         {
             _platformBlocks.Add(new Platform(left,top,width,height));
         }

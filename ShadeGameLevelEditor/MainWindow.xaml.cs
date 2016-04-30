@@ -81,7 +81,11 @@ namespace ShadeGameLevelEditor
             if (_drawingRect && _dragOrigin != null && _dragStop != null)
             {
                 ClearOutline();
-                DrawCanvas.Children.Add(DrawRectangle(false));
+                var rectangle = DrawRectangle(false);
+                DrawCanvas.Children.Add(rectangle);
+                var x = Canvas.GetLeft(rectangle);
+                var y = Canvas.GetTop(rectangle);
+                _viewModel.AddNewPlatform(x,y,rectangle.ActualWidth,rectangle.ActualHeight);
             }
 
             _dragOrigin = null;

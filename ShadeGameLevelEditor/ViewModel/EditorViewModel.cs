@@ -117,6 +117,12 @@ namespace ShadeGameLevelEditor.ViewModel
             return _levelViewModel != null;
         }
 
+        public void AddNewPlatform(double x, double y, double width, double height)
+        {
+            _levelViewModel.BuildNewLevelPlatform(x,y,width,height);
+
+        }
+
         #endregion
 
         #region Events

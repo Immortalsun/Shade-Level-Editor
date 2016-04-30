@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using ShadeGameLevelEditor.Models;
+﻿using ShadeGameLevelEditor.Models;
 
 namespace ShadeGameLevelEditor.ViewModel
 {
@@ -41,6 +34,11 @@ namespace ShadeGameLevelEditor.ViewModel
         #endregion
 
         #region Methods
+
+        public void BuildNewLevelPlatform(double x, double y, double width, double height)
+        {
+            _level.AddPlatformByCoordinates(x,y,width,height);
+        }
 
         #endregion
 
