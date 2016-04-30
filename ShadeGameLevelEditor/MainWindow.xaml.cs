@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -46,11 +48,31 @@ namespace ShadeGameLevelEditor
                 {
                     _dragStop = currentPos;
                     _drawingRect = true;
+                    DrawPlatformOutline();
+                    e.Handled = true;
                 }
             }
             else
             {
                 _drawingRect = false;
+                e.Handled = false;
+            }
+        }
+
+        private void DrawPlatformOutline()
+        {
+            ClearOutline();
+            DrawCanvas.Children.Add(DrawRectangle(true));
+        }
+
+        private void ClearOutline()
+        {
+            List<UIElement> outlines = new List<UIElement>();
+
+            outlines.AddRange(DrawCanvas.Children.Cast<Rectangle>().Where(n => n.StrokeDashArray.Count > 0));
+            foreach (var outline in outlines)
+            {
+                DrawCanvas.Children.Remove(outline);
             }
         }
 
@@ -58,20 +80,35 @@ namespace ShadeGameLevelEditor
         {
             if (_drawingRect && _dragOrigin != null && _dragStop != null)
             {
-                var platformRect = new Rectangle();
-                platformRect.Fill = new SolidColorBrush(Colors.LawnGreen);
-                platformRect.Width = Math.Abs(_dragOrigin.Value.X - _dragStop.Value.X);
-                platformRect.Height = Math.Abs(_dragOrigin.Value.Y - _dragStop.Value.Y);
-                Canvas.SetLeft(platformRect,Math.Min(_dragOrigin.Value.X,_dragStop.Value.X));
-                Canvas.SetTop(platformRect, Math.Min(_dragOrigin.Value.Y,_dragStop.Value.Y));
-
-                DrawCanvas.Children.Add(platformRect);
+                ClearOutline();
+                DrawCanvas.Children.Add(DrawRectangle(false));
             }
 
             _dragOrigin = null;
             _dragStop = null;
             _drawingRect = false;
-            
+            e.Handled = true;
+        }
+
+        private Rectangle DrawRectangle(bool isOutline)
+        {
+            var platformRect = new Rectangle();
+            if (isOutline)
+            {
+                platformRect.Stroke = new SolidColorBrush(Colors.OrangeRed);
+                platformRect.StrokeDashArray = new DoubleCollection(new double[]{4,3});
+            }
+            else
+            {
+                platformRect.Fill = new SolidColorBrush(Colors.LawnGreen);
+            }
+
+            platformRect.Width = Math.Abs(_dragOrigin.Value.X - _dragStop.Value.X);
+            platformRect.Height = Math.Abs(_dragOrigin.Value.Y - _dragStop.Value.Y);
+            Canvas.SetLeft(platformRect, Math.Min(_dragOrigin.Value.X, _dragStop.Value.X));
+            Canvas.SetTop(platformRect, Math.Min(_dragOrigin.Value.Y, _dragStop.Value.Y));
+
+            return platformRect;
         }
     }
 }
