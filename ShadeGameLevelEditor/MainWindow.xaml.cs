@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using ShadeGameLevelEditor.Utils;
 using ShadeGameLevelEditor.ViewModel;
 
 namespace ShadeGameLevelEditor
@@ -19,6 +21,7 @@ namespace ShadeGameLevelEditor
         private bool _drawingRect, _moving;
         private const double _minWidth = 16.0;
         private const double _minHeight = 16.0;
+        private AdornerLayer _layer;
         private Point? _dragOrigin, _dragStop;
         public MainWindow()
         {
@@ -62,17 +65,20 @@ namespace ShadeGameLevelEditor
         private void DrawPlatformOutline()
         {
             ClearOutline();
-            DrawCanvas.Children.Add(DrawRectangle(true));
+            var rect = DrawRectangle(true);
+            var placement = new Point(Canvas.GetLeft(rect),Canvas.GetTop(rect));
+            _layer.Add(new OutlineAdorner(DrawCanvas,placement,rect.Width,rect.Height));
         }
 
         private void ClearOutline()
         {
-            List<UIElement> outlines = new List<UIElement>();
-
-            outlines.AddRange(DrawCanvas.Children.Cast<Rectangle>().Where(n => n.StrokeDashArray.Count > 0));
-            foreach (var outline in outlines)
+            var adorners = _layer.GetAdorners(DrawCanvas);
+            if (adorners != null && adorners.Any())
             {
-                DrawCanvas.Children.Remove(outline);
+                foreach (var adorner in adorners)
+                {
+                    _layer.Remove(adorner);
+                }
             }
         }
 
@@ -82,10 +88,9 @@ namespace ShadeGameLevelEditor
             {
                 ClearOutline();
                 var rectangle = DrawRectangle(false);
-                DrawCanvas.Children.Add(rectangle);
                 var x = Canvas.GetLeft(rectangle);
                 var y = Canvas.GetTop(rectangle);
-                _viewModel.AddNewPlatform(x,y,rectangle.ActualWidth,rectangle.ActualHeight);
+                _viewModel.AddNewPlatform(x,y,rectangle.Width,rectangle.Height);
             }
 
             _dragOrigin = null;
@@ -114,6 +119,11 @@ namespace ShadeGameLevelEditor
             Canvas.SetTop(platformRect, Math.Min(_dragOrigin.Value.Y, _dragStop.Value.Y));
 
             return platformRect;
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            _layer = AdornerLayer.GetAdornerLayer(DrawCanvas);
         }
     }
 }

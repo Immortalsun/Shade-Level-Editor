@@ -1,8 +1,10 @@
 ﻿<Window x:Class="ShadeGameLevelEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:viewModel="clr-namespace:ShadeGameLevelEditor.ViewModel"
         Title="MainWindow" Height="350" Width="525"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        Loaded="MainWindow_OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -34,25 +36,53 @@
                                     ScaleY="{Binding ZoomLevel}"/>
                     </Image.LayoutTransform>
                     </Image>
-                <Canvas
+                
+                <ItemsControl
                     x:Name="DrawCanvas"
                     Height="{Binding ElementName=bgImage,Path=ActualHeight}"
                     Width="{Binding ElementName=bgImage,Path=ActualWidth}"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Background="#66B6D8E3"
+                    ItemsSource="{Binding LevelViewModel.Platforms}"
                     PreviewMouseLeftButtonDown="DrawCanvas_OnPreviewMouseLeftButtonDown"
                     PreviewMouseMove="DrawCanvas_OnPreviewMouseMove"
                     PreviewMouseLeftButtonUp="DrawCanvas_OnPreviewMouseLeftButtonUp"
                     PreviewMouseWheel="DrawCanvas_OnPreviewMouseWheel"
-                    IsHitTestVisible="True">
-                    <Canvas.LayoutTransform>
-                     <ScaleTransform CenterX="0.5" CenterY="0.5"
+                    IsHitTestVisible="True"
+                    >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas
+                                Background="#66B6D8E3"
+                                Height="{Binding ElementName=bgImage,Path=ActualHeight}"
+                                Width="{Binding ElementName=bgImage,Path=ActualWidth}"
+                                />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type viewModel:PlatformViewModel}">
+                            <Rectangle
+                                Fill="LawnGreen"
+                                Height="{Binding Height}"
+                                Width="{Binding Width}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding Path=XLocation}"/>
+                            <Setter Property="Canvas.Top" Value="{Binding  Path=YLocation}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    
+                    <ItemsControl.LayoutTransform>
+                        <ScaleTransform CenterX="0.5" CenterY="0.5"
                                 ScaleX="{Binding ZoomLevel}"
                                 ScaleY="{Binding ZoomLevel}"/>
-                    </Canvas.LayoutTransform>
-
-                </Canvas>
+                    </ItemsControl.LayoutTransform>
+                </ItemsControl>
+               
             </Grid>
         </ScrollViewer>
 

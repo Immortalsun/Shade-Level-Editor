@@ -47,6 +47,7 @@ namespace ShadeGameLevelEditor.ViewModel
         public LevelViewModel LevelViewModel
         {
             get { return _levelViewModel; }
+            set { SetAndNotify(ref _levelViewModel, value);}
         }
 
         public RelayCommand OpenCommand
@@ -107,7 +108,7 @@ namespace ShadeGameLevelEditor.ViewModel
             if (gotFile != null && gotFile.Value)
             {
                 var bgImage = fileDlg.FileName;
-                _levelViewModel = new LevelViewModel(bgImage);
+                LevelViewModel = new LevelViewModel(bgImage);
                 OnPropertyChanged("LevelImageSource");
             }
         }

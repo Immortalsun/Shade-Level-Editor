@@ -1,4 +1,5 @@
-﻿using ShadeGameLevelEditor.Models;
+﻿using System.Collections.Generic;
+using ShadeGameLevelEditor.Models;
 
 namespace ShadeGameLevelEditor.ViewModel
 {
@@ -7,7 +8,7 @@ namespace ShadeGameLevelEditor.ViewModel
        #region Fields
 
         private Level _level;
-
+        public List<PlatformViewModel> _platforms;
         #endregion
 
         #region Properties
@@ -21,6 +22,15 @@ namespace ShadeGameLevelEditor.ViewModel
                 OnPropertyChanged();
             }
         }
+
+        public List<PlatformViewModel> Platforms
+        {
+            get { return _platforms; }
+            set
+            {
+               SetAndNotify(ref _platforms,value);
+            }
+        }
         #endregion
 
         #region Constructor
@@ -29,6 +39,7 @@ namespace ShadeGameLevelEditor.ViewModel
         {
             _level = new Level();
             _level.BgImage = bgImage;
+            _platforms = new List<PlatformViewModel>();
         }
 
         #endregion
@@ -37,7 +48,16 @@ namespace ShadeGameLevelEditor.ViewModel
 
         public void BuildNewLevelPlatform(double x, double y, double width, double height)
         {
-            _level.AddPlatformByCoordinates(x,y,width,height);
+            var platformsList = new List<PlatformViewModel>(_platforms);
+            platformsList.Add(new PlatformViewModel(x,y,width,height));
+            Platforms = platformsList;
+        }
+
+        public void RemovePlatform(PlatformViewModel p)
+        {
+            var platformsList = new List<PlatformViewModel>(_platforms);
+            platformsList.Remove(p);
+            Platforms = platformsList;
         }
 
         #endregion
