@@ -41,7 +41,10 @@
                     VerticalAlignment="Center"
                     Background="#66B6D8E3"
                     PreviewMouseLeftButtonDown="DrawCanvas_OnPreviewMouseLeftButtonDown"
-                    PreviewMouseWheel="DrawCanvas_OnPreviewMouseWheel">
+                    PreviewMouseMove="DrawCanvas_OnPreviewMouseMove"
+                    PreviewMouseLeftButtonUp="DrawCanvas_OnPreviewMouseLeftButtonUp"
+                    PreviewMouseWheel="DrawCanvas_OnPreviewMouseWheel"
+                    IsHitTestVisible="True">
                     <Canvas.LayoutTransform>
                      <ScaleTransform CenterX="0.5" CenterY="0.5"
                                 ScaleX="{Binding ZoomLevel}"
