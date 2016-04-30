@@ -21,6 +21,13 @@ namespace ShadeGameLevelEditor.Models
         #endregion
 
         #region Properties
+
+        public string BgImage
+        {
+            get { return _bgFilePath; }
+            set { _bgFilePath = value; }
+        }
+
         #endregion
 
         #region Constructor

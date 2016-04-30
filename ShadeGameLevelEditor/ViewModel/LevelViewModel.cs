@@ -12,18 +12,40 @@ namespace ShadeGameLevelEditor.ViewModel
     public class LevelViewModel : ViewModelBase
     {
        #region Fields
-       #endregion
 
-       #region Properties
-       #endregion
+        private Level _level;
 
-       #region Constructor
-       #endregion
+        #endregion
 
-       #region Methods
-       #endregion
+        #region Properties
 
-       #region Events
-       #endregion
+        public string LevelImage
+        {
+            get { return _level.BgImage; }
+            set
+            {
+                _level.BgImage = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Constructor
+
+        public LevelViewModel(string bgImage)
+        {
+            _level = new Level();
+            _level.BgImage = bgImage;
+        }
+
+        #endregion
+
+        #region Methods
+
+        #endregion
+
+        #region Events
+
+        #endregion
     }
 }

@@ -7,3 +7,7 @@ E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\S
 E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\ShadeGameLevelEditor.g.resources
 E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\ShadeGameLevelEditor.Properties.Resources.resources
 E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\ShadeGameLevelEditor.csproj.GenerateResource.Cache
+E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\bin\Debug\ShadeGameLevelEditor.exe
+E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\bin\Debug\ShadeGameLevelEditor.pdb
+E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\ShadeGameLevelEditor.exe
+E:\CodeProjects\VSProjects\ShadeGameLevelEditor\ShadeGameLevelEditor\obj\Debug\ShadeGameLevelEditor.pdb

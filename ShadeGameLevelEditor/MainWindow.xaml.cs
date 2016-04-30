@@ -28,5 +28,15 @@ namespace ShadeGameLevelEditor
             DataContext = _viewModel;
             InitializeComponent();
         }
+
+        private void DrawCanvas_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DrawCanvas_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            _viewModel.Zoom(e.Delta);
+        }
     }
 }
