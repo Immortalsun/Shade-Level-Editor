@@ -16,7 +16,7 @@ namespace ShadeGameLevelEditor
     public partial class MainWindow : Window
     {
         private EditorViewModel _viewModel;
-        private bool _drawingRect;
+        private bool _drawingRect, _moving;
         private const double _minWidth = 16.0;
         private const double _minHeight = 16.0;
         private Point? _dragOrigin, _dragStop;
@@ -97,6 +97,7 @@ namespace ShadeGameLevelEditor
             {
                 platformRect.Stroke = new SolidColorBrush(Colors.OrangeRed);
                 platformRect.StrokeDashArray = new DoubleCollection(new double[]{4,3});
+                platformRect.IsHitTestVisible = false;
             }
             else
             {

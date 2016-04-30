@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Platform.cs" />
+    <Compile Include="Utils\ResizeAdorner.cs" />
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="ViewModel\LevelViewModel.cs" />

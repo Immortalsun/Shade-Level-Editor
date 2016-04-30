@@ -17,6 +17,7 @@
             VerticalScrollBarVisibility="Auto"
             >
             <Grid
+                x:Name="InteractGrid"
                 Background="White">
                 <Image
                     x:Name="bgImage"
