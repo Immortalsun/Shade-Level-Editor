@@ -18,7 +18,7 @@ namespace ShadeGameLevelEditor
     public partial class MainWindow : Window
     {
         private EditorViewModel _viewModel;
-        private bool _drawingRect, _moving;
+        private bool _drawingRect;
         private const double _minWidth = 16.0;
         private const double _minHeight = 16.0;
         private AdornerLayer _layer;

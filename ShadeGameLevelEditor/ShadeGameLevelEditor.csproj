@@ -54,6 +54,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Platform.cs" />
+    <Compile Include="Utils\IntegerUpDown.cs" />
     <Compile Include="Utils\OutlineAdorner.cs" />
     <Compile Include="Utils\ResizeAdorner.cs" />
     <Compile Include="Utils\RelayCommand.cs" />

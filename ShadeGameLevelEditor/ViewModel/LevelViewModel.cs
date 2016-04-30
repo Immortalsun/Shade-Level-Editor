@@ -49,7 +49,7 @@ namespace ShadeGameLevelEditor.ViewModel
         public void BuildNewLevelPlatform(double x, double y, double width, double height)
         {
             var platformsList = new List<PlatformViewModel>(_platforms);
-            platformsList.Add(new PlatformViewModel(x,y,width,height));
+            platformsList.Add(new PlatformViewModel(x,y,width,height,platformsList.Count.ToString()));
             Platforms = platformsList;
         }
 

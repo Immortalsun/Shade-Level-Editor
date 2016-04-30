@@ -7,6 +7,7 @@ namespace ShadeGameLevelEditor.ViewModel
         #region Fields
         private Platform _platform;
         private double _x, _y, _width, _height;
+        private string _name;
         #endregion
 
         #region Properties
@@ -42,6 +43,12 @@ namespace ShadeGameLevelEditor.ViewModel
             get { return _width; }
             set { SetAndNotify(ref _width, value);}
         }
+
+        public string Name
+        {
+            get { return _name; }
+            set { SetAndNotify(ref _name, value);}
+        }
         #endregion
 
         #region Constructors
@@ -51,12 +58,13 @@ namespace ShadeGameLevelEditor.ViewModel
             _platform = p;
         }
 
-        public PlatformViewModel(double x, double y, double width, double height)
+        public PlatformViewModel(double x, double y, double width, double height, string name)
         {
             _x = x;
             _y = y;
             _width = width;
             _height = height;
+            _name = name;
         }
 
         #endregion
