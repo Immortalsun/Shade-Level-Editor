@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ShadeGameLevelEditor.ViewModel;
 
 namespace ShadeGameLevelEditor
 {
@@ -20,8 +21,11 @@ namespace ShadeGameLevelEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        private EditorViewModel _viewModel;
         public MainWindow()
         {
+            _viewModel = new EditorViewModel();
+            DataContext = _viewModel;
             InitializeComponent();
         }
     }

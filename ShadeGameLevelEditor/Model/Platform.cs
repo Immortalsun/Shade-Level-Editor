@@ -6,9 +6,15 @@ namespace ShadeGameLevelEditor.Model
 {
     public class Platform : IXmlSerializable
     {
-        //Fields
+
+        #region Fields
+
         private int _x, _y, _width, _height;
-        //Constructor
+
+        #endregion
+
+        #region Properties
+
         public Platform()
         {
             _x = 0;
@@ -33,8 +39,17 @@ namespace ShadeGameLevelEditor.Model
             _height = p._height;
         }
 
-        //Methods
-        //Events
+        #endregion
+
+        #region Constructors
+        #endregion
+
+        #region Methods
+        #endregion
+
+        #region Events
+        #endregion
+
         public XmlSchema GetSchema()
         {
             throw new System.NotImplementedException();

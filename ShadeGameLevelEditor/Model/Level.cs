@@ -6,16 +6,24 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using ShadeGameLevelEditor.Model;
 
 namespace ShadeGameLevelEditor.Models
 {
     public class Level : IXmlSerializable
     {
-        //Fields
+
+        #region Fields
+
         private string _bgFilePath;
         private List<Platform> _platformBlocks;
 
-        //Constructor
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructor
         public Level()
         {
             _bgFilePath = String.Empty;
@@ -32,8 +40,9 @@ namespace ShadeGameLevelEditor.Models
             _bgFilePath = level._bgFilePath;
             _platformBlocks = level._platformBlocks;
         }
+        #endregion
 
-        //Methods
+        #region Methods
 
         private void LoadLevelFile(string levelFile)
         {
@@ -54,9 +63,10 @@ namespace ShadeGameLevelEditor.Models
         {
             _platformBlocks.Add(block);
         }
+        #endregion
 
-
-        //Events
+        #region Events
+        #endregion
 
         public XmlSchema GetSchema()
         {

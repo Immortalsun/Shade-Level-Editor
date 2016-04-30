@@ -5,23 +5,25 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ShadeGameLevelEditor.Models;
 
 namespace ShadeGameLevelEditor.ViewModel
 {
-    public class LevelViewModel : INotifyPropertyChanged
+    public class LevelViewModel : ViewModelBase
     {
+       #region Fields
+       #endregion
 
+       #region Properties
+       #endregion
 
+       #region Constructor
+       #endregion
 
+       #region Methods
+       #endregion
 
-
-
-
-      public event PropertyChangedEventHandler PropertyChanged;
-
-      protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-      {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-      }
+       #region Events
+       #endregion
     }
 }
