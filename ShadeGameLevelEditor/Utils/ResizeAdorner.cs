@@ -1,29 +1,37 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using ShadeGameLevelEditor.ViewModel;
 
 namespace ShadeGameLevelEditor.Utils
 {
     public class ResizeAdorner : Adorner
     {
         private Rect _elementRect;
-        private EllipseGeometry _topLeft, _topRight, _bottomLeft, _bottomRight;
+        private EllipseGeometry _topLeft, _topRight, _bottomLeft, _bottomRight, _lastDragged;
+        private bool _dragging;
         private VisualCollection _visual;
-        public ResizeAdorner(UIElement adornedElement) : base(adornedElement)
+        private PlatformViewModel _resizePlatform;
+        public ResizeAdorner(UIElement adornedElement, PlatformViewModel resizePlatform) : base(adornedElement)
         {
             _visual = new VisualCollection(this);
             var frameworkEle = adornedElement as FrameworkElement;
             if (frameworkEle != null)
             {
-                _elementRect = new Rect(new Point(0, 0),new Size(frameworkEle.ActualWidth, 
-                    frameworkEle.ActualHeight));
+                _elementRect = new Rect(new Point(0, 0),new Size(resizePlatform.Width, 
+                    resizePlatform.Height));
+                _resizePlatform = resizePlatform;
             }
         }
 
         protected override void OnRender(DrawingContext drawingContext)
         {
+            _elementRect = new Rect(new Point(0, 0), new Size(_resizePlatform.Width,
+                    _resizePlatform.Height));
+
             if (_elementRect != null)
             {
                 drawingContext.DrawRectangle(null, new Pen(Brushes.Black,1.0),_elementRect);
@@ -39,9 +47,10 @@ namespace ShadeGameLevelEditor.Utils
             }
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
-            
+            _dragging = false;
+            _lastDragged = null;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -50,16 +59,47 @@ namespace ShadeGameLevelEditor.Utils
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
                 var thumb = GetThumb(pos);
+
                 if (thumb == null)
                 {
                     e.Handled = false;
                     return;
                 }
 
+                var delta = new Vector(pos.X - thumb.Center.X, pos.Y - thumb.Center.Y);
                 if (thumb.Equals(_topLeft))
                 {
-
+                    var oldBottom = _resizePlatform.Height + _resizePlatform.YLocation;
+                    var oldRight = _resizePlatform.Width+_resizePlatform.XLocation;
+                    _resizePlatform.XLocation += delta.X;
+                    _resizePlatform.YLocation += delta.Y;
+                    _resizePlatform.Width = Math.Abs(_resizePlatform.XLocation - oldRight);
+                    _resizePlatform.Height = Math.Abs(_resizePlatform.YLocation - oldBottom);
+                    _dragging = true;
+                    _lastDragged = _topLeft;
                 }
+                else if (thumb.Equals(_bottomLeft))
+                {
+                    var oldRight = _resizePlatform.Width + _resizePlatform.XLocation;
+                    _resizePlatform.XLocation += delta.X;
+                    _resizePlatform.Width = Math.Abs(_resizePlatform.XLocation - oldRight);
+                    _resizePlatform.Height += delta.Y;
+                }
+                else if (thumb.Equals(_topRight))
+                {
+                    var oldBottom = _resizePlatform.Height + _resizePlatform.YLocation;
+                    _resizePlatform.YLocation += delta.Y;
+                    _resizePlatform.Width += delta.X;
+                    _resizePlatform.Height = Math.Abs(_resizePlatform.YLocation - oldBottom);
+                }
+                else
+                {
+                    _resizePlatform.Width += delta.X;
+                    _resizePlatform.Height += delta.Y;
+                }
+
+                InvalidateVisual();
+                
             }
         }
 

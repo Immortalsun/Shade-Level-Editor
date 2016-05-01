@@ -104,7 +104,7 @@ namespace ShadeGameLevelEditor.ViewModel
 
             if (IsSelected)
             {
-                layer.Add(new ResizeAdorner(button));
+                layer.Add(new ResizeAdorner(button,this));
             }
             else
             {
