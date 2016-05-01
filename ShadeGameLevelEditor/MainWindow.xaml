@@ -271,7 +271,7 @@
                             <DataTemplate>
                                 <utils:IntegerUpDown
                                     MaxValue="500.0"
-                                    Value="{Binding Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    Value="{Binding Height, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
