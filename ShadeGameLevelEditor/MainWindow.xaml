@@ -57,6 +57,29 @@
                 </Setter>
             </Style.Setters>
         </Style>
+        <Style x:Key="PlatformButtonStyle" TargetType="{x:Type Button}">
+            <Style.Setters>
+                <Setter Property="Background" Value="Chartreuse"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle
+                                Height="{TemplateBinding ActualHeight}"
+                                Width="{TemplateBinding ActualWidth}"
+                                Fill="{TemplateBinding Background}"/>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="DarkGreen"/>
+                                </Trigger>
+                                <DataTrigger Binding="{Binding IsSelected , Mode=OneWay}" Value="True">
+                                    <Setter Property="Background" Value="LightGreen"/>
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -122,10 +145,12 @@
                     
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type viewModel:PlatformViewModel}">
-                            <Rectangle
-                                Fill="LawnGreen"
+                            <Button
+                                Style="{StaticResource PlatformButtonStyle}"
                                 Height="{Binding Height}"
-                                Width="{Binding Width}"/>
+                                Width="{Binding Width}"
+                                Command="{Binding SelectCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Self}}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                     
@@ -151,6 +176,7 @@
             Grid.Column="1"
             Orientation="Horizontal"
             HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
             Margin="10"
             >
             <Button
@@ -176,7 +202,11 @@
         <ListView
             Grid.Row="1"
             Grid.Column="0"
+            Width="650"
+            Height="400"
             SelectionMode="Single"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
             ItemsSource="{Binding LevelViewModel.Platforms}"
             >
             <ListView.View>

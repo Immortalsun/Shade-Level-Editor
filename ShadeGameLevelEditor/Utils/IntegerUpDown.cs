@@ -66,7 +66,7 @@ namespace ShadeGameLevelEditor.Utils
 
         private void IncrementValue(object obj)
         {
-            var num = Int32.Parse(Value.ToString());
+            var num = Int32.Parse(Math.Floor(Value).ToString());
             if (num + 1 < MaxValue)
             {
                 num++;

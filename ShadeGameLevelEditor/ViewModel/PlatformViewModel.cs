@@ -1,4 +1,8 @@
-﻿using ShadeGameLevelEditor.Model;
+﻿using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using ShadeGameLevelEditor.Model;
+using ShadeGameLevelEditor.Utils;
 
 namespace ShadeGameLevelEditor.ViewModel
 {
@@ -8,6 +12,8 @@ namespace ShadeGameLevelEditor.ViewModel
         private Platform _platform;
         private double _x, _y, _width, _height;
         private string _name;
+        private bool _isSelected;
+        private RelayCommand _selectedCommand;
         #endregion
 
         #region Properties
@@ -49,6 +55,17 @@ namespace ShadeGameLevelEditor.ViewModel
             get { return _name; }
             set { SetAndNotify(ref _name, value);}
         }
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set { SetAndNotify(ref _isSelected, value); }
+        }
+
+        public RelayCommand SelectCommand
+        {
+            get { return _selectedCommand ?? (_selectedCommand = new RelayCommand(SelectPlatform)); }
+        }
         #endregion
 
         #region Constructors
@@ -74,6 +91,32 @@ namespace ShadeGameLevelEditor.ViewModel
         public void BuildPlatform()
         {
             _platform = new Platform(XLocation,YLocation,Width,Height);
+        }
+
+        public void SelectPlatform(object obj)
+        {
+            IsSelected = !_isSelected;
+
+            var button = obj as Button;
+            if (button == null) return;
+            var layer = AdornerLayer.GetAdornerLayer(button);
+            if (layer == null) return;
+
+            if (IsSelected)
+            {
+                layer.Add(new ResizeAdorner(button));
+            }
+            else
+            {
+                var adorners = layer.GetAdorners(button);
+                if (adorners != null && adorners.Any())
+                {
+                    foreach (var adorner in adorners)
+                    {
+                        layer.Remove(adorner);
+                    }
+                }
+            }
         }
 
         #endregion

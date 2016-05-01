@@ -33,11 +33,13 @@ namespace ShadeGameLevelEditor
         private void DrawCanvas_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _dragOrigin = e.GetPosition(DrawCanvas);
+            e.Handled = false;
         }
 
         private void DrawCanvas_OnPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             _viewModel.Zoom(e.Delta);
+            e.Handled = true;
         }
 
         private void DrawCanvas_OnPreviewMouseMove(object sender, MouseEventArgs e)
@@ -77,7 +79,10 @@ namespace ShadeGameLevelEditor
             {
                 foreach (var adorner in adorners)
                 {
-                    _layer.Remove(adorner);
+                    if (adorner is OutlineAdorner)
+                    {
+                        _layer.Remove(adorner);
+                    }
                 }
             }
         }
@@ -96,7 +101,7 @@ namespace ShadeGameLevelEditor
             _dragOrigin = null;
             _dragStop = null;
             _drawingRect = false;
-            e.Handled = true;
+            e.Handled = false;
         }
 
         private Rectangle DrawRectangle(bool isOutline)

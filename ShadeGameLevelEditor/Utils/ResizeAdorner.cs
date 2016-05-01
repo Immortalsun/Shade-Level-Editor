@@ -27,10 +27,10 @@ namespace ShadeGameLevelEditor.Utils
             if (_elementRect != null)
             {
                 drawingContext.DrawRectangle(null, new Pen(Brushes.Black,1.0),_elementRect);
-                _topLeft = new EllipseGeometry(_elementRect.TopLeft,2,2);
-                _bottomLeft = new EllipseGeometry(_elementRect.BottomLeft,2,2);
-                _topRight = new EllipseGeometry(_elementRect.TopRight,2,2);
-                _bottomRight = new EllipseGeometry(_elementRect.BottomRight,2,2);
+                _topLeft = new EllipseGeometry(_elementRect.TopLeft,6,6);
+                _bottomLeft = new EllipseGeometry(_elementRect.BottomLeft,6,6);
+                _topRight = new EllipseGeometry(_elementRect.TopRight,6,6);
+                _bottomRight = new EllipseGeometry(_elementRect.BottomRight,6,6);
 
                 drawingContext.DrawGeometry(Brushes.LightSlateGray,null,_topLeft);
                 drawingContext.DrawGeometry(Brushes.LightSlateGray, null, _topRight);
@@ -39,9 +39,53 @@ namespace ShadeGameLevelEditor.Utils
             }
         }
 
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnPreviewMouseLeftButtonDown(e);
+            
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            var pos = e.GetPosition(this);
+            if (Mouse.LeftButton == MouseButtonState.Pressed)
+            {
+                var thumb = GetThumb(pos);
+                if (thumb == null)
+                {
+                    e.Handled = false;
+                    return;
+                }
+
+                if (thumb.Equals(_topLeft))
+                {
+
+                }
+            }
+        }
+
+        private EllipseGeometry GetThumb(Point point)
+        {
+            if (_topLeft.Bounds.Contains(point))
+            {
+                return _topLeft;
+            }
+
+            if (_topRight.Bounds.Contains(point))
+            {
+                return _topRight;
+            }
+
+            if (_bottomLeft.Bounds.Contains(point))
+            {
+                return _bottomLeft;
+            }
+
+            if (_bottomRight.Bounds.Contains(point))
+            {
+                return _bottomRight;
+            }
+
+            return null;
         }
 
         protected override Visual GetVisualChild(int index)
