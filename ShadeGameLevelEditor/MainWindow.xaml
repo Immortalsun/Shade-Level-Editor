@@ -106,7 +106,7 @@
                 Background="White">
                 <Image
                     x:Name="bgImage"
-                    Source="{Binding LevelImageSource}"
+                    Source="{Binding LevelBackgroundImageSource}"
                     Stretch="Uniform"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
@@ -118,7 +118,22 @@
                                     ScaleX="{Binding ZoomLevel}"
                                     ScaleY="{Binding ZoomLevel}"/>
                     </Image.LayoutTransform>
-                    </Image>
+                 </Image>
+                
+                <Image
+                    x:Name="fgImage"
+                    Stretch="Uniform"
+                    Source="{Binding LevelForegroundImageSource}"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Height="Auto"
+                    Width="Auto">
+                    <Image.LayoutTransform>
+                        <ScaleTransform CenterX="0.5" CenterY="0.5"
+                                    ScaleX="{Binding ZoomLevel}"
+                                    ScaleY="{Binding ZoomLevel}"/>
+                    </Image.LayoutTransform>
+                </Image>
                 
                 <ItemsControl
                     x:Name="DrawCanvas"
@@ -207,6 +222,7 @@
             SelectionMode="Single"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
+            IsSelected="{Binding IsSelected, Mode=TwoWay}"
             ItemsSource="{Binding LevelViewModel.Platforms}"
             >
             <ListView.View>

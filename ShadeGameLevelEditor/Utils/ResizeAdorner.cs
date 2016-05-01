@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using ShadeGameLevelEditor.ViewModel;
 
 namespace ShadeGameLevelEditor.Utils
@@ -11,8 +10,7 @@ namespace ShadeGameLevelEditor.Utils
     public class ResizeAdorner : Adorner
     {
         private Rect _elementRect;
-        private EllipseGeometry _topLeft, _topRight, _bottomLeft, _bottomRight, _lastDragged;
-        private bool _dragging;
+        private EllipseGeometry _topLeft, _topRight, _bottomLeft, _bottomRight, _center;
         private VisualCollection _visual;
         private PlatformViewModel _resizePlatform;
         public ResizeAdorner(UIElement adornedElement, PlatformViewModel resizePlatform) : base(adornedElement)
@@ -39,19 +37,15 @@ namespace ShadeGameLevelEditor.Utils
                 _bottomLeft = new EllipseGeometry(_elementRect.BottomLeft,6,6);
                 _topRight = new EllipseGeometry(_elementRect.TopRight,6,6);
                 _bottomRight = new EllipseGeometry(_elementRect.BottomRight,6,6);
-
+                _center = new EllipseGeometry(new Point(_elementRect.Width/2, _elementRect.Height/2),8,8);
                 drawingContext.DrawGeometry(Brushes.LightSlateGray,null,_topLeft);
                 drawingContext.DrawGeometry(Brushes.LightSlateGray, null, _topRight);
                 drawingContext.DrawGeometry(Brushes.LightSlateGray, null, _bottomLeft);
                 drawingContext.DrawGeometry(Brushes.LightSlateGray, null, _bottomRight);
+                drawingContext.DrawGeometry(Brushes.OrangeRed,null,_center);
             }
         }
 
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            _dragging = false;
-            _lastDragged = null;
-        }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -75,8 +69,6 @@ namespace ShadeGameLevelEditor.Utils
                     _resizePlatform.YLocation += delta.Y;
                     _resizePlatform.Width = Math.Abs(_resizePlatform.XLocation - oldRight);
                     _resizePlatform.Height = Math.Abs(_resizePlatform.YLocation - oldBottom);
-                    _dragging = true;
-                    _lastDragged = _topLeft;
                 }
                 else if (thumb.Equals(_bottomLeft))
                 {
@@ -92,12 +84,16 @@ namespace ShadeGameLevelEditor.Utils
                     _resizePlatform.Width += delta.X;
                     _resizePlatform.Height = Math.Abs(_resizePlatform.YLocation - oldBottom);
                 }
-                else
+                else if (thumb.Equals(_bottomRight))
                 {
                     _resizePlatform.Width += delta.X;
                     _resizePlatform.Height += delta.Y;
                 }
-
+                else
+                {
+                    _resizePlatform.XLocation += delta.X;
+                    _resizePlatform.YLocation += delta.Y;
+                }
                 InvalidateVisual();
                 
             }
@@ -124,6 +120,12 @@ namespace ShadeGameLevelEditor.Utils
             {
                 return _bottomRight;
             }
+
+            if (_center.Bounds.Contains(point))
+            {
+                return _center;
+            }
+
 
             return null;
         }

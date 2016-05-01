@@ -16,20 +16,37 @@ namespace ShadeGameLevelEditor.ViewModel
         #endregion
 
         #region Properties
-        public string LevelImageSource
+        public string LevelBackgroundImageSource
         {
             get
             {
                 if (_levelViewModel != null)
                 {
-                   return _levelViewModel.LevelImage;
+                   return _levelViewModel.LevelBackground;
                 }
 
                 return String.Empty;
             }
             set
             {
-                _levelViewModel.LevelImage = value;
+                _levelViewModel.LevelBackground = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string LevelForegroundImageSource
+        {
+            get 
+            {
+                if (_levelViewModel != null)
+                {
+                  return  _levelViewModel.LevelForeground;
+                }
+                return string.Empty;
+            }
+            set
+            {
+                _levelViewModel.LevelForeground = value;
                 OnPropertyChanged();
             }
         }
@@ -103,13 +120,28 @@ namespace ShadeGameLevelEditor.ViewModel
         public void CreateNewLevel(object obj)
         {
            OpenFileDialog fileDlg = new OpenFileDialog();
+            fileDlg.Title = "Select Level Background";
+            fileDlg.Filter = "PNG Image files (*.png) | *.png";
            var gotFile = fileDlg.ShowDialog();
 
             if (gotFile != null && gotFile.Value)
             {
                 var bgImage = fileDlg.FileName;
-                LevelViewModel = new LevelViewModel(bgImage);
-                OnPropertyChanged("LevelImageSource");
+
+                OpenFileDialog foreDlg = new OpenFileDialog();
+                foreDlg.Title = "Select Level Foreground";
+                foreDlg.Filter = "PNG Image files (*.png) | *.png";
+                var gotFore = foreDlg.ShowDialog();
+
+                if (gotFore != null && gotFore.HasValue)
+                {
+                    var fgImage = foreDlg.FileName;
+                    LevelViewModel = new LevelViewModel(bgImage,fgImage);
+                    OnPropertyChanged("LevelBackgroundImageSource");
+                    OnPropertyChanged("LevelForegroundImageSource");
+                }
+
+
             }
         }
 

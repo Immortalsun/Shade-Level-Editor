@@ -13,12 +13,22 @@ namespace ShadeGameLevelEditor.ViewModel
 
         #region Properties
 
-        public string LevelImage
+        public string LevelBackground
         {
             get { return _level.BgImage; }
             set
             {
                 _level.BgImage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string LevelForeground
+        {
+            get { return _level.FgImage; }
+            set
+            {
+                _level.FgImage = value;
                 OnPropertyChanged();
             }
         }
@@ -35,10 +45,11 @@ namespace ShadeGameLevelEditor.ViewModel
 
         #region Constructor
 
-        public LevelViewModel(string bgImage)
+        public LevelViewModel(string bgImage, string fgImage)
         {
             _level = new Level();
             _level.BgImage = bgImage;
+            _level.FgImage = fgImage;
             _platforms = new List<PlatformViewModel>();
         }
 

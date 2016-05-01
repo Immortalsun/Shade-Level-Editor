@@ -15,7 +15,7 @@ namespace ShadeGameLevelEditor.Models
 
         #region Fields
 
-        private string _bgFilePath;
+        private string _bgFilePath, _fgFilePath;
         private List<Platform> _platformBlocks;
 
         #endregion
@@ -28,6 +28,11 @@ namespace ShadeGameLevelEditor.Models
             set { _bgFilePath = value; }
         }
 
+        public string FgImage
+        {
+            get { return _fgFilePath;}
+            set { _fgFilePath = value; }
+        }
         #endregion
 
         #region Constructor
