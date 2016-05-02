@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Xml.Serialization;
 using Microsoft.Win32;
+using ShadeGameLevelEditor.Models;
 using ShadeGameLevelEditor.Utils;
 
 namespace ShadeGameLevelEditor.ViewModel
@@ -97,12 +100,39 @@ namespace ShadeGameLevelEditor.ViewModel
 
         public void Open(object obj)
         {
+           OpenFileDialog fileDlg = new OpenFileDialog();
+           fileDlg.Title = "Select Level File";
+           fileDlg.Filter = "XML files (*.xml) | *.xml";
+           var gotFile = fileDlg.ShowDialog();
 
+            if (gotFile != null && gotFile.Value)
+            {
+                var filePath = fileDlg.FileName;
+                XmlSerializer serializer = new XmlSerializer(typeof(Level));
+                FileStream fs = new FileStream(filePath,FileMode.Open);
+                Level level = null;
+                level = (Level)serializer.Deserialize(fs);
+                if (level != null)
+                {
+                    LevelViewModel = new LevelViewModel(level);
+                    OnPropertyChanged("LevelBackgroundImageSource");
+                    OnPropertyChanged("LevelForegroundImageSource");
+                }
+            }
         }
 
         public void Save(object obj)
         {
-
+            SaveFileDialog saveDlg = new SaveFileDialog();
+            var gotDirectory = saveDlg.ShowDialog();
+            if (gotDirectory != null && gotDirectory.Value)
+            {
+                var saveFile = saveDlg.FileName;
+                XmlSerializer serializer = new XmlSerializer(typeof(Level));
+                TextWriter writer = new StreamWriter(saveFile);
+                serializer.Serialize(writer,LevelViewModel.CurrentLevel);
+                writer.Close();
+            }
         }
 
         public void Zoom(int direction)
@@ -153,7 +183,6 @@ namespace ShadeGameLevelEditor.ViewModel
         public void AddNewPlatform(double x, double y, double width, double height)
         {
             _levelViewModel.BuildNewLevelPlatform(x,y,width,height);
-
         }
 
         #endregion

@@ -13,6 +13,11 @@ namespace ShadeGameLevelEditor.ViewModel
 
         #region Properties
 
+        public Level CurrentLevel
+        {
+            get { return _level; }
+        }
+
         public string LevelBackground
         {
             get { return _level.BgImage; }
@@ -53,15 +58,23 @@ namespace ShadeGameLevelEditor.ViewModel
             _platforms = new List<PlatformViewModel>();
         }
 
+        public LevelViewModel(Level level)
+        {
+            _level = level;
+            BuildPlatformViewModels();
+        }
+
         #endregion
 
         #region Methods
 
         public void BuildNewLevelPlatform(double x, double y, double width, double height)
         {
+            _level.AddPlatformByCoordinates(x,y,width,height);
             var platformsList = new List<PlatformViewModel>(_platforms);
             platformsList.Add(new PlatformViewModel(x,y,width,height,platformsList.Count.ToString()));
             Platforms = platformsList;
+
         }
 
         public void RemovePlatform(PlatformViewModel p)
@@ -69,6 +82,19 @@ namespace ShadeGameLevelEditor.ViewModel
             var platformsList = new List<PlatformViewModel>(_platforms);
             platformsList.Remove(p);
             Platforms = platformsList;
+        }
+
+        private void BuildPlatformViewModels()
+        {
+            if (_level != null)
+            {
+                var platformList = new List<PlatformViewModel>();
+                foreach (var platform in _level.Platforms)
+                {
+                    platformList.Add(new PlatformViewModel(platform.X,platform.Y,platform.Width,platform.Height,platformList.Count.ToString()));
+                }
+                Platforms = platformList;
+            }
         }
 
         #endregion

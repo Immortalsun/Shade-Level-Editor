@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace ShadeGameLevelEditor.Model
 {
-    public class Platform : IXmlSerializable
+    public class Platform
     {
 
         #region Fields
@@ -14,29 +14,32 @@ namespace ShadeGameLevelEditor.Model
         #endregion
 
         #region Properties
-
-        public double X
+        [XmlAttribute]
+        public double Height
         {
-            get { return _x; }
-            set { _x = value; }
+            get { return _height; }
+            set { _height = value; }
         }
 
-        public double Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
-
+        [XmlAttribute]
         public double Width
         {
             get { return _width; }
             set { _width = value; }
         }
 
-        public double Height
+        [XmlAttribute]
+        public double Y
         {
-            get { return _height; }
-            set { _height = value; }
+            get { return _y; }
+            set { _y = value; }
+        }
+
+        [XmlAttribute]
+        public double X
+        {
+            get { return _x; }
+            set { _x = value; }
         }
         #endregion
 
@@ -72,19 +75,5 @@ namespace ShadeGameLevelEditor.Model
         #region Events
         #endregion
 
-        public XmlSchema GetSchema()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

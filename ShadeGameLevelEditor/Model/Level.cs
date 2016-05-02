@@ -10,7 +10,8 @@ using ShadeGameLevelEditor.Model;
 
 namespace ShadeGameLevelEditor.Models
 {
-    public class Level : IXmlSerializable
+    [XmlRootAttribute("Level")]
+    public class Level
     {
 
         #region Fields
@@ -21,17 +22,24 @@ namespace ShadeGameLevelEditor.Models
         #endregion
 
         #region Properties
-
+        [XmlElement("BackgroundImage")]
         public string BgImage
         {
             get { return _bgFilePath; }
             set { _bgFilePath = value; }
         }
 
+        [XmlElement("ForegroundImage")]
         public string FgImage
         {
             get { return _fgFilePath;}
             set { _fgFilePath = value; }
+        }
+
+        [XmlArrayItem("Platform")]
+        public List<Platform> Platforms
+        {
+            get { return _platformBlocks;}
         }
         #endregion
 
@@ -79,20 +87,5 @@ namespace ShadeGameLevelEditor.Models
 
         #region Events
         #endregion
-
-        public XmlSchema GetSchema()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ReadXml(XmlReader reader)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void WriteXml(XmlWriter writer)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
