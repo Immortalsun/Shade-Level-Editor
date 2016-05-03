@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using ShadeGameLevelEditor.Model;
@@ -73,6 +74,11 @@ namespace ShadeGameLevelEditor.ViewModel
         public PlatformViewModel(Platform p)
         {
             _platform = p;
+            _x = _platform.X;
+            _y = _platform.Y;
+            _height = _platform.Height;
+            _width = _platform.Width;
+            _name = _platform.Name;
         }
 
         public PlatformViewModel(double x, double y, double width, double height, string name)
@@ -82,16 +88,12 @@ namespace ShadeGameLevelEditor.ViewModel
             _width = width;
             _height = height;
             _name = name;
+            _platform = new Platform(x,y,width,height,name);
         }
 
         #endregion
 
         #region Methods
-
-        public void BuildPlatform()
-        {
-            _platform = new Platform(XLocation,YLocation,Width,Height);
-        }
 
         public void SelectPlatform(object obj)
         {
@@ -116,7 +118,16 @@ namespace ShadeGameLevelEditor.ViewModel
                         layer.Remove(adorner);
                     }
                 }
+                UpdatePlatform();
             }
+        }
+
+        private void UpdatePlatform()
+        {
+            _platform.X = XLocation;
+            _platform.Y = YLocation;
+            _platform.Height = Height;
+            _platform.Width = Width;
         }
 
         #endregion

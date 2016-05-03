@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using ShadeGameLevelEditor.Model;
 
@@ -63,21 +58,6 @@ namespace ShadeGameLevelEditor.Models
         #endregion
 
         #region Methods
-
-        private void LoadLevelFile(string levelFile)
-        {
-
-        }
-
-        private void SaveLevel(string saveLoc)
-        {
-
-        }
-
-        public void AddPlatformByCoordinates(double left, double top, double width, double height)
-        {
-            _platformBlocks.Add(new Platform(left,top,width,height));
-        }
 
         public void AddPlatformByBlock(Platform block)
         {

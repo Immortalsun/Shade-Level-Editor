@@ -102,7 +102,7 @@ namespace ShadeGameLevelEditor.ViewModel
         {
            OpenFileDialog fileDlg = new OpenFileDialog();
            fileDlg.Title = "Select Level File";
-           fileDlg.Filter = "XML files (*.xml) | *.xml";
+           fileDlg.Filter = "Level files (*.lvl) | *.lvl";
            var gotFile = fileDlg.ShowDialog();
 
             if (gotFile != null && gotFile.Value)
@@ -124,6 +124,8 @@ namespace ShadeGameLevelEditor.ViewModel
         public void Save(object obj)
         {
             SaveFileDialog saveDlg = new SaveFileDialog();
+            saveDlg.Title = "Save Level";
+            saveDlg.Filter = "Level files (*.lvl) | *.lvl";
             var gotDirectory = saveDlg.ShowDialog();
             if (gotDirectory != null && gotDirectory.Value)
             {

@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System;
+using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
@@ -10,7 +11,7 @@ namespace ShadeGameLevelEditor.Model
         #region Fields
 
         private double _x, _y, _width, _height;
-
+        private string _name;
         #endregion
 
         #region Properties
@@ -41,6 +42,12 @@ namespace ShadeGameLevelEditor.Model
             get { return _x; }
             set { _x = value; }
         }
+
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
         #endregion
 
         #region Constructors
@@ -50,14 +57,16 @@ namespace ShadeGameLevelEditor.Model
             _y = 0;
             _width = 0;
             _height = 0;
+            _name = String.Empty;
         }
 
-        public Platform(double x, double y, double width, double height)
+        public Platform(double x, double y, double width, double height, string name)
         {
             _x = x;
             _y = y;
             _width = width;
             _height = height;
+            _name = name;
         }
 
         public Platform(Platform p)
@@ -66,6 +75,7 @@ namespace ShadeGameLevelEditor.Model
             _y = p._y;
             _width = p._width;
             _height = p._height;
+            _name = p._name;
         }
         #endregion
 

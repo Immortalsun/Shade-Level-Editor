@@ -70,11 +70,11 @@ namespace ShadeGameLevelEditor.ViewModel
 
         public void BuildNewLevelPlatform(double x, double y, double width, double height)
         {
-            _level.AddPlatformByCoordinates(x,y,width,height);
             var platformsList = new List<PlatformViewModel>(_platforms);
-            platformsList.Add(new PlatformViewModel(x,y,width,height,platformsList.Count.ToString()));
+            var newPlatform = new PlatformViewModel(x, y, width, height, platformsList.Count.ToString());
+            platformsList.Add(newPlatform);
+            _level.AddPlatformByBlock(newPlatform.Platform);
             Platforms = platformsList;
-
         }
 
         public void RemovePlatform(PlatformViewModel p)
@@ -91,9 +91,17 @@ namespace ShadeGameLevelEditor.ViewModel
                 var platformList = new List<PlatformViewModel>();
                 foreach (var platform in _level.Platforms)
                 {
-                    platformList.Add(new PlatformViewModel(platform.X,platform.Y,platform.Width,platform.Height,platformList.Count.ToString()));
+                    platformList.Add(new PlatformViewModel(platform));
                 }
                 Platforms = platformList;
+            }
+        }
+
+        public void BuildLevel()
+        {
+            foreach (var platform in Platforms)
+            {
+                _level.Platforms.Add(platform.Platform);
             }
         }
 
